@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Ano de Amor - Nossa História</title>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="16x16"  href="tes.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+  </head>
+  <body>
+    <!-- Efeitos Flutuantes -->
+    <div class="floating-hearts" id="floating-hearts"></div>
+
+    <!-- Header -->
+    <header>
+      <div class="hero-content">
+        <span class="hero-date">29 de Março de 2024 - 29 de Março de 2025</span>
+        <h1>1 Ano do nosso Amor</h1>
+        <p>365 dias de momentos especiais, sorrisos compartilhados e memórias
+          inesquecíveis.</p>
+        <a href="#lugares" class="btn">Explorar Nossa História</a>
+      </div>
+      <div class="scroll-down">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </header>
+
+    <!-- Navegação -->
+    <nav>
+      <div class="container nav-container">
+        <a href="#" class="logo">Nosso Amor</a>
+        <div class="mobile-menu">
+          <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#lugares">Lugares Especiais</a></li>
+          <li><a href="#musicas">Nossas Músicas</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#mensagem">Mensagem</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Contador -->
+    <div class="counter">
+      <div class="container">
+        <h3 class="counter-title">Celebrando Nosso Primeiro Ano Juntos</h3>
+        <div class="counter-container">
+          <div class="counter-item">
+            <div class="counter-number" id="days">0</div>
+            <div class="counter-label">Dias</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-number" id="hours">0</div>
+            <div class="counter-label">Horas</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-number" id="minutes">0</div>
+            <div class="counter-label">Minutos</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-number" id="seconds">0</div>
+            <div class="counter-label">Segundos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção de Lugares -->
+    <section class="places" id="lugares">
+      <div class="container">
+        <div class="section-title">
+          <h2>Lugares e Coisas que me Lembram Você</h2>
+          <p>Cada lugar que visitamos juntos guarda um pedaço da nossa história.
+            Aqui estão alguns dos nossos momentos mais especiais.</p>
+        </div>
+        <div class="places-content">
+          <div class="map-container" id="map"></div>
+          <div class="places-grid">
+            <div class="place-card">
+              <div class="place-image"
+                style="background-image: url('sezamo.png')"></div>
+              <div class="place-info">
+                <h3>Nosso Primeiro Encontro</h3>
+                <p>Aquele café onde nos encontramos pela primeira vez e
+                  conversamos por horas sem perceber o tempo passar.</p>
+              </div>
+            </div>
+            <div class="place-card">
+              <div class="place-image"
+                style="background-image: url('/api/placeholder/400/300')"></div>
+              <div class="place-info">
+                <h3>O Parque dos Sorrisos</h3>
+                <p>Onde tivemos nosso primeiro piquenique e você me surpreendeu
+                  com aquele poema lindo.</p>
+              </div>
+            </div>
+            <div class="place-card">
+              <div class="place-image"
+                style="background-image: url('/api/placeholder/400/300')"></div>
+              <div class="place-info">
+                <h3>Nosso Restaurante Favorito</h3>
+                <p>Onde celebramos nossos primeiros 6 meses juntos e fizemos
+                  planos para o futuro.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Músicas -->
+    <section class="songs" id="musicas">
+      <div class="container songs-content">
+        <div class="section-title">
+          <h2>Músicas que me Lembram Você</h2>
+          <p>Cada melodia conta uma parte da nossa história. Estas são as
+            canções que tocam meu coração e me fazem pensar em você.</p>
+        </div>
+        <div class="song-list">
+          <div class="song-card">
+            <div class="song-embed">
+              <iframe width="100%" height="100%"
+                src="https://www.youtube.com/embed/2Vv-BfVoq4g" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <div class="song-info">
+              <h3>Perfect</h3>
+              <p>Ed Sheeran</p>
+              <p
+                class="song-memory">"Dançando descalços na grama, sob as estrelas. Um momento perfeito que jamais esquecerei."</p>
+            </div>
+          </div>
+          <div class="song-card">
+            <div class="song-embed">
+              <iframe width="100%" height="100%"
+                src="https://www.youtube.com/embed/9F_dqv0CN4Y" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <div class="song-info">
+              <h3>Pupila</h3>
+              <p>AnaVitória & Vitor Kley</p>
+              <p
+                class="song-memory">"Tocava no rádio na nossa primeira viagem juntos. Agora sempre que ouço, lembro do seu sorriso ao cantar."</p>
+            </div>
+          </div>
+          <div class="song-card">
+            <div class="song-embed">
+              <iframe width="100%" height="100%"
+                src="https://www.youtube.com/embed/DUKoKXlT8Z0" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+            <div class="song-info">
+              <h3>Pra Sempre Com Você</h3>
+              <p>Jorge & Mateus</p>
+              <p
+                class="song-memory">"Nossa música no karaokê naquela noite especial. Cantamos juntos e eu soube que queria estar com você para sempre."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Galeria -->
+    <section class="gallery" id="galeria">
+      <div class="container">
+        <div class="section-title">
+          <h2>Nossa Galeria de Momentos</h2>
+          <p>Cada foto conta uma história, cada sorriso guarda uma memória. Aqui
+            estão alguns dos nossos momentos mais especiais juntos.</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 1">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 2">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 3">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 4">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 5">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 6">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 7">
+          </div>
+          <div class="gallery-item">
+            <img src="IMG_4979.png" alt="Momento Especial 8">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mensagem Final -->
+    <section class="final-message" id="mensagem">
+      <div class="container">
+        <h2>De Mim Para Você</h2>
+        <p>"O tempo passa, mas nosso amor só cresce. Um ano juntos e cada dia ao seu lado é um novo presente. Obrigado por colorir minha vida com seu sorriso, por fazer meu coração bater mais forte com sua presença e por me fazer sonhar com um futuro ao seu lado."</p>
+        <p>"Se um dia me perguntarem qual foi o momento mais feliz da minha vida, direi que foi aquele em que te conheci. E se me perguntarem pelo segundo momento mais feliz, direi que foi cada segundo que passei ao seu lado desde então."</p>
+        <p>"Que este seja apenas o primeiro de muitos anos que celebraremos juntos."</p>
+        <div class="heart-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal para Galeria -->
+    <div id="modal" class="modal">
+      <span class="modal-close">&times;</span>
+      <img class="modal-content" id="modal-img">
+    </div>
+
+    <div class="music-player" style="display: none;">
+      <h3>Player de Música</h3>
+      <audio id="audio-player" controls></audio>
+      <ul id="playlist"></ul>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>Feito com muito amor para celebrar nosso primeiro ano juntos ❤️</p>
+        <p>&copy; 2025 - <span id="current-year"></span> | Nosso Amor</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>

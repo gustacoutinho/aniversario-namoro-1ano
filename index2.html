@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player de Música</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .music-player h3 {
+            margin: 0;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            cursor: pointer;
+            background: #ff4081;
+            border: none;
+            padding: 8px 12px;
+            color: white;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        li {
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+        
+        /* Estilizando os botões do player de áudio */
+        audio::-webkit-media-controls-panel {
+            background-color: #ff4081;
+            border-radius: 10px;
+        }
+        audio::-webkit-media-controls-play-button {
+            background-color: white;
+            border-radius: 50%;
+        }
+        audio::-webkit-media-controls-pause-button {
+            background-color: #ff4081 !important;
+            border-radius: 50%;
+        }
+        audio::-webkit-media-controls-timeline,
+        audio::-webkit-media-controls-volume-slider {
+            filter: invert(100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="music-player">
+        <h3>Player de Música</h3>
+        <button id="start-button">Iniciar Música</button>
+        <audio id="audio-player" controls style="display:none;"></audio>
+        <ul id="playlist"></ul>
+    </div>
+    
+    <script>
+        let playlist = [
+    { name: "Ponto Fraco", url: "Ponto Fraco.mp3" },
+    { name: "Perfect", url: "Ed Sheeran - Perfect (Official Music Video).mp3" },
+    { name: "Make It Rain", url: "Foy Vance -Make It Rain.mp3" }
+  ];
+        
+        const audioPlayer = document.getElementById('audio-player');
+        const playlistElement = document.getElementById('playlist');
+        const startButton = document.getElementById('start-button');
+        let currentIndex = 0;
+
+        function updatePlaylist() {
+            playlistElement.innerHTML = '';
+            playlist.forEach((song, index) => {
+                let li = document.createElement('li');
+                li.innerText = song.name;
+                li.onclick = () => playSong(index);
+                playlistElement.appendChild(li);
+            });
+        }
+
+        function playSong(index) {
+            if (playlist[index]) {
+                currentIndex = index;
+                audioPlayer.src = playlist[index].url;
+                audioPlayer.play().catch(error => console.error("Erro ao tentar tocar a música: ", error));
+            }
+        }
+
+        audioPlayer.addEventListener('ended', () => {
+            currentIndex++;
+            if (currentIndex < playlist.length) {
+                playSong(currentIndex);
+            }
+        });
+
+        startButton.addEventListener('click', () => {
+            startButton.style.display = 'none';
+            audioPlayer.style.display = 'block';
+            playSong(0);
+        });
+        
+        updatePlaylist();
+    </script>
+</body>
+</html>
