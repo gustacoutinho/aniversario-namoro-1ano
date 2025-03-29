@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz do Amor ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9eaa, #ff6b6b);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            color: #ff4d6d;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .quiz-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .question-container {
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        .question {
+            color: #ff4d6d;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #ffd1dc;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            background: #ffd1dc;
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            background: #ff4d6d;
+            color: white;
+            border-color: #ff4d6d;
+        }
+
+        .option.correct,
+        .option.incorrect {
+            background: #ff4d6d;
+            color: white;
+            border-color: #ff4d6d;
+        }
+
+        .flag-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff3355;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .result-container {
+            display: none;
+            text-align: center;
+        }
+
+        .result-container.active {
+            display: block;
+        }
+
+        .result-image {
+            max-width: 200px;
+            margin: 20px auto;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #ffd1dc;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: #ff4d6d;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .image-upload {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-upload input {
+            display: none;
+        }
+
+        .image-upload label {
+            background: #ff4d6d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .image-upload label:hover {
+            background: #ff3355;
+        }
+
+        .score-display {
+            font-size: 1.2em;
+            color: #ff4d6d;
+            margin: 10px 0;
+        }
+
+        .summary-container {
+            margin-top: 30px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .summary-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background: white;
+        }
+
+        .summary-item.correct {
+            border-left: 4px solid #4CAF50;
+        }
+
+        .summary-item.incorrect {
+            border-left: 4px solid #f44336;
+        }
+
+        .summary-question {
+            font-weight: bold;
+            color: #ff4d6d;
+            margin-bottom: 5px;
+        }
+
+        .summary-answer {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .summary-correct {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .summary-incorrect {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        /* Add styles for required answer warning */
+        .answer-required {
+            color: #ff4d6d;
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .answer-required.show {
+            display: block;
+        }
+
+        .question-container.shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .btn-site-principal {
+            background: linear-gradient(45deg, #ff4d6d, #ff6b6b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            animation: jumpButton 1s infinite;
+        }
+
+        .btn-site-principal:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+            animation: none;
+        }
+
+        @keyframes jumpButton {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .start-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff9eaa, #ff6b6b);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .start-modal-content {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .start-modal h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .start-modal p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .start-button {
+            background: white;
+            color: #ff4d6d;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+    </style>
+        <link rel="icon" type="image/png" sizes="16x16"  href="tes.png">
+
+</head>
+
+<body>
+    <div class="start-modal" id="startModal">
+        <div class="start-modal-content">
+            <h1>Quiz do Amor ❤️</h1>
+            <p>Vamos testar o quanto você me conhece?</p>
+            <button class="start-button" id="startButton">Iniciar Quiz</button>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>Quiz do Amor ❤️</h1>
+            <p>Descubra o quanto seu relacionamento é especial!</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div id="questions-container">
+            <!-- Questions will be loaded here dynamically -->
+        </div>
+
+        <div class="navigation">
+            <button id="prevBtn" disabled>Anterior</button>
+            <button id="nextBtn">Próximo</button>
+        </div>
+
+        <div class="result-container" id="result">
+            <h2>Parabéns! 🎉</h2>
+            <p>Você completou o quiz do amor!</p>
+            <a href="index.html" target="_blank" class="btn-site-principal">Explorar Nossa História</a>
+            <div class="score-display" id="score-display"></div>
+            <img id="resultImage" class="result-image" src="" alt="Resultado">
+            <p id="resultMessage"></p>
+            <div class="summary-container" id="summary-container">
+                <h3>Resumo das Respostas</h3>
+                <div id="summary-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const startModal = document.getElementById('startModal');
+        const startButton = document.getElementById('startButton');
+        const quizContainer = document.querySelector('.quiz-container');
+
+        startButton.addEventListener('click', () => {
+            startModal.style.display = 'none';
+            quizContainer.classList.add('active');
+        });
+
+        const quizData = {
+            questions: [
+                {
+                    id: 1,
+                    question: "Onde foi nosso primeiro beijo?",
+                    options: [
+                        { text: "Parque das Nações", correct: false },
+                        { text: "Rei do Bilhar", correct: false },
+                        { text: "Picadinho", correct: true },
+                        { text: "Sésamo", correct: false }
+                    ]
+                },
+                {
+                    id: 2,
+                    question: "Como você descreveria a comunicação no seu relacionamento?",
+                    options: [
+                        { text: "Excelente, conversamos sobre tudo", correct: true },
+                        { text: "Não sei se conversar é a melhor opção para resolver", correct: false },
+                        { text: "Às vezes temos dificuldades", correct: false },
+                        { text: "Precisamos melhorar muito", correct: false }
+                    ]
+                },
+                {
+                    id: 3,
+                    question: "Qual dessas caracteristicas eu mais valorizo e espero de você?",
+                    options: [
+                        { text: "Bondade", correct: false },
+                        { text: "Inteligência", correct: false },
+                        { text: "Honestidade", correct: true },
+                        { text: "Humor", correct: false }
+                    ]
+                },
+                {
+                    id: 4,
+                    question: "Como vocês lidam com as diferenças de opinião?",
+                    options: [
+                        { text: "Conversamos até chegar a um consenso", correct: true },
+                        { text: "Respeitamos as opiniões diferentes", correct: false },
+                        { text: "Às vezes brigamos", correct: false },
+                        { text: "Ignoramos as diferenças", correct: false }
+                    ]
+                },
+                {
+                    id: 5,
+                    question: "Qual é o sonho de casal que vocês compartilham?",
+                    options: [
+                        { text: "Viajar o mundo juntos", correct: false },
+                        { text: "Construir uma família", correct: true },
+                        { text: "Morar em outro país", correct: false },
+                        { text: "Ainda estamos descobrindo", correct: false }
+                    ]
+                },
+                {
+                    id: 6,
+                    question: "Qual dessas comidas é minha favorita?",
+                    options: [
+                        { text: "Churrasco", correct: true },
+                        { text: "Lanche com muita carne", correct: false },
+                        { text: "Strogonoff de Frango", correct: false },
+                        { text: "Pizza de Calabersa", correct: false }
+                    ]
+                },
+                {
+                    id: 7,
+                    question: "Se nosso relacionamento fosse um filme, qual gênero seria?",
+                    options: [
+                        { text: "Romance puro e apaixonante", correct: true },
+                        { text: "Comédia romântica cheia de risadas", correct: true },
+                        { text: "Drama emocionante com reviravoltas", correct: true },
+                        { text: "Aventura intensa e cheia de paixão", correct: true }
+                    ]
+                },
+                {
+                    id: 8,
+                    question: "Qual minha altura?",
+                    options: [
+                        { text: "180cm", correct: false },
+                        { text: "178cm", correct: false },
+                        { text: "170cm", correct: false },
+                        { text: "175cm", correct: true }
+                    ]
+                },
+                {
+                    id: 9,
+                    question: "Se vocês tivessem que escolher um apelido de casal, qual seria?",
+                    options: [
+                        { text: "Debi & Loide", correct: false },
+                        { text: "Timão e Pumba", correct: false },
+                        { text: "Tigrão e Leitão", correct: true },
+                        { text: "Salsicha e Scooby", correct: false }
+                    ]
+                },
+                {
+                    id: 10,
+                    question: "Se a gente pudesse reviver um momento juntos, qual seria?",
+                    options: [
+                        { text: "O primeiro encontro", correct: false },
+                        { text: "O primeiro beijo", correct: false },
+                        { text: "A primeira viagem", correct: false },
+                        { text: "Nossas conquistas juntos (Casa, efetivação emprego etc)", correct: false },
+                        { text: "Viveria todos os nosso momentos novamente! Sem exceção!", correct: true }
+                    ]
+                }
+            ]
+        };
+
+        const questionsContainer = document.getElementById('questions-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progress = document.getElementById('progress');
+        const result = document.getElementById('result');
+        const resultImage = document.getElementById('resultImage');
+        const resultMessage = document.getElementById('resultMessage');
+        const coupleImage = document.getElementById('coupleImage');
+        const scoreDisplay = document.getElementById('score-display');
+
+        let currentQuestion = 0;
+        let answers = [];
+        let correctAnswers = 0;
+
+        // Create question containers
+        quizData.questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = `question-container ${index === 0 ? 'active' : ''}`;
+            questionDiv.id = `question${index + 1}`;
+
+            questionDiv.innerHTML = `
+                <div class="question">${index + 1}. ${q.question}</div>
+                <div class="options">
+                    ${q.options.map((opt, optIndex) => `
+                        <div class="option" data-correct="${opt.correct}">${opt.text}</div>
+                    `).join('')}
+                </div>
+            `;
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        const questions = document.querySelectorAll('.question-container');
+        const options = document.querySelectorAll('.option');
+
+        function updateProgress() {
+            const percentage = ((currentQuestion + 1) / questions.length) * 100;
+            progress.style.width = `${percentage}%`;
+        }
+
+        function showQuestion(index) {
+            questions.forEach(q => q.classList.remove('active'));
+            questions[index].classList.add('active');
+            updateProgress();
+
+            prevBtn.disabled = index === 0;
+            nextBtn.textContent = index === questions.length - 1 ? 'Finalizar' : 'Próximo';
+
+            // Hide any existing answer required message
+            const currentQuestionContainer = questions[index];
+            const existingWarning = currentQuestionContainer.querySelector('.answer-required');
+            if (existingWarning) {
+                existingWarning.classList.remove('show');
+            }
+        }
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                const questionContainer = option.closest('.question-container');
+                const questionIndex = Array.from(questions).indexOf(questionContainer);
+
+                // Remove selected class from all options in this question
+                questionContainer.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+
+                option.classList.add('selected');
+
+                answers[questionIndex] = option.textContent;
+
+                // Hide answer required message when an answer is selected
+                const warning = questionContainer.querySelector('.answer-required');
+                if (warning) {
+                    warning.classList.remove('show');
+                }
+            });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const currentQuestionContainer = questions[currentQuestion];
+            const selectedOption = currentQuestionContainer.querySelector('.option.selected');
+
+            if (!selectedOption) {
+                // Show warning message
+                let warning = currentQuestionContainer.querySelector('.answer-required');
+                if (!warning) {
+                    warning = document.createElement('div');
+                    warning.className = 'answer-required';
+                    warning.textContent = 'Por favor, selecione uma resposta antes de continuar';
+                    currentQuestionContainer.appendChild(warning);
+                }
+                warning.classList.add('show');
+
+                // Add shake animation
+                currentQuestionContainer.classList.add('shake');
+                setTimeout(() => {
+                    currentQuestionContainer.classList.remove('shake');
+                }, 500);
+
+                return;
+            }
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            } else {
+                showResult();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        });
+
+        function showResult() {
+    const questionContainers = document.querySelectorAll('.question-container');
+    questionContainers.forEach(q => q.classList.remove('active'));
+    result.classList.add('active');
+
+    // Correctly calculate correct answers
+    correctAnswers = quizData.questions.filter((q, index) => {
+        const userAnswer = answers[index];
+        const correctOption = q.options.find(opt => opt.correct);
+        return userAnswer === correctOption.text;
+    }).length;
+
+    // Calculate score
+    const score = (correctAnswers / questions.length) * 100;
+    scoreDisplay.textContent = `Sua pontuação: ${score.toFixed(1)}% (${correctAnswers} de ${questions.length} corretas)`;
+
+    let message = '';
+    if (score >= 80) {
+        message = 'VOCÊ É FODA PORRA! PARABÉNS MEU AMOR E COMO PRÊMIO VOCÊ GANOU UMA CAIXA MISTERIOSA ❤️❤️❤️';
+        resultImage.src = './imagens/caixa misteriosa.png';
+    } else if (score >= 50) {
+        message = 'Que orgulho meu amor, como recompensa você ganhou uma caixa misteriosa! ! 💕';
+        resultImage.src = './imagens/caixa misteriosa.png';
+    } else {
+        message = 'Parabéns, você ganhou uma caixa misteriosa! ❤️';
+        resultImage.src = './imagens/caixa misteriosa.png';
+    }
+
+    resultMessage.textContent = message;
+
+    // Generate summary
+    const summaryContent = document.getElementById('summary-content');
+    summaryContent.innerHTML = '';
+
+    quizData.questions.forEach((q, index) => {
+        const userAnswer = answers[index] || 'Não respondida';
+        const correctAnswer = q.options.find(opt => opt.correct).text;
+        const isCorrect = userAnswer === correctAnswer;
+
+        const summaryItem = document.createElement('div');
+        summaryItem.className = `summary-item ${isCorrect ? 'correct' : 'incorrect'}`;
+
+        summaryItem.innerHTML = `
+            <div class="summary-question">${index + 1}. ${q.question}</div>
+            <div class="summary-answer">Sua resposta: ${userAnswer}</div>
+            ${!isCorrect ? `<div class="summary-correct">Resposta correta: ${correctAnswer}</div>` : ''}
+        `;
+
+        summaryContent.appendChild(summaryItem);
+    });
+}
+
+        coupleImage.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    resultImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+
+</html>

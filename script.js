@@ -1,8 +1,7 @@
-
 $(document).ready(function () {
 
   // Data de início: 29 de março de 2024
-  const startDate = new Date('2024-03-29T00:00:00');
+  const startDate = new Date('2024-03-29T20:30:00');
 
   function updateCounter() {
     const currentDate = new Date();
@@ -51,9 +50,29 @@ $(document).ready(function () {
   });
 
   // Modal para galeria
-  $('.gallery-item').click(function () {
-    var imgSrc = $(this).find('img').attr('src');
+  let currentImageIndex = 0;
+  const galleryItems = $('.gallery-item');
+  const totalImages = galleryItems.length;
+
+  function showImage(index) {
+    const imgSrc = $(galleryItems[index]).find('img').attr('src');
     $('#modal-img').attr('src', imgSrc);
+    currentImageIndex = index;
+  }
+
+  function showNextImage() {
+    currentImageIndex = (currentImageIndex + 1) % totalImages;
+    showImage(currentImageIndex);
+  }
+
+  function showPrevImage() {
+    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+    showImage(currentImageIndex);
+  }
+
+  $('.gallery-item').click(function () {
+    currentImageIndex = $(this).index();
+    showImage(currentImageIndex);
     $('#modal').fadeIn();
   });
 
@@ -61,9 +80,17 @@ $(document).ready(function () {
     $('#modal').fadeOut();
   });
 
+  $('#modal').click(function () {
+    showNextImage();
+  });
+
   $(document).keydown(function (e) {
     if (e.keyCode === 27) {
       $('#modal').fadeOut();
+    } else if (e.keyCode === 37) { // Seta esquerda
+      showPrevImage();
+    } else if (e.keyCode === 39) { // Seta direita
+      showNextImage();
     }
   });
 
@@ -149,9 +176,20 @@ $(document).ready(function () {
   });
 
   let playlist = [
-    { name: "Ponto Fraco", url: "Ponto Fraco.mp3" },
-    { name: "Perfect", url: "Ed Sheeran - Perfect (Official Music Video).mp3" },
-    { name: "Make It Rain", url: "Foy Vance -Make It Rain.mp3" }
+    { name: "All of Me - John Legend", url: "./musicas/John Legend - All of Me.mp3" },
+    { name: "Ai Já Era - Jorge & Mateus", url: "./musicas/Jorge & Mateus - Ai Já Era - [Novo DVD Live in London] - (Clipe Oficial).mp3" },
+    { name: "Ponto Fraco", url: "./musicas/Ponto Fraco.mp3" },
+    { name: "Perfect - Ed Sheeran", url: "./musicas/Ed Sheeran - Perfect (Official Music Video).mp3" },
+    { name: "Make It Rain - Foy Vance", url: "./musicas/Foy Vance -Make It Rain.mp3" },
+    { name: "Amor Não é Jogo de Azar - Jorge & Mateus", url: "./musicas/Jorge & Mateus - Amor Não é Jogo de Azar - [DVD Ao Vivo Em Goiânia] - (Clipe Oficial).mp3" },
+    { name: "Quando Você Some - Victor & Leo", url: "./musicas/Victor & Leo - Quando Você Some (Ao Vivo).mp3" },
+    { name: "Ela É Demais - Rick & Renner", url: "./musicas/Rick & Renner - Ela É Demais.mp3" },
+    { name: "The Time Of My Life - Bill Medley & Jennifer Warnes", url: "./musicas/Bill Medley, Jennifer Warnes - The Time Of My Life .mp3" },
+    { name: "93 Million Miles - Jason Mraz", url: "./musicas/Jason Mraz - 93 Million Miles.mp3" },
+    { name: "Lose Control - Teddy Swims", url: "./musicas/Teddy Swims - Lose Control.mp3" },
+    { name: "I'm Yours - Jason Mraz", url: "./musicas/Jason Mraz - I'm Yours.mp3" },
+    { name: "Would You Go With Me - Josh Turner", url: "./musicas/Josh Turner - Would You Go With Me.mp3" },
+    { name: "Jason Mraz", url: "./musicas/Jason Mraz.mp3" }
   ];
 
   const audioPlayer = document.getElementById('audio-player');
@@ -184,8 +222,35 @@ $(document).ready(function () {
     }
   });
 
+  $('.explorar-historia').click(function () {
+    playSong(0);
+  });
   updatePlaylist();
   setTimeout(() => {
     // playSong(0);
   }, 1000);
+
+  // Music player minimize functionality
+  const minimizeBtn = document.getElementById('minimizeBtn');
+  const musicPlayer = document.querySelector('.music-player');
+  const musicPlayerContent = document.querySelector('.music-player-content');
+  const minimizeIcon = minimizeBtn.querySelector('i');
+
+  minimizeBtn.addEventListener('click', () => {
+    if (musicPlayer.style.height === '50px' || !musicPlayer.style.height) {
+      // Maximize
+      musicPlayer.style.height = 'auto';
+      musicPlayerContent.style.opacity = '1';
+      minimizeIcon.classList.remove('fa-plus');
+      minimizeIcon.classList.add('fa-minus');
+      minimizeIcon.style.transform = 'rotate(0deg)';
+    } else {
+      // Minimize
+      musicPlayer.style.height = '50px';
+      musicPlayerContent.style.opacity = '0';
+      minimizeIcon.classList.remove('fa-minus');
+      minimizeIcon.classList.add('fa-plus');
+      minimizeIcon.style.transform = 'rotate(180deg)';
+    }
+  });
 });

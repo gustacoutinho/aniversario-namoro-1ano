@@ -91,7 +91,7 @@
  /* --- Header --- */
  header {
    height: 100vh;
-   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('IMG_4979.png') center/cover no-repeat;
+   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('./imagens/IMG_4979.png') center/cover no-repeat;
    display: flex;
    align-items: center;
    justify-content: center;
@@ -447,6 +447,7 @@
    display: block;
    max-width: 90%;
    max-height: 90%;
+   margin-top: 5vh;
  }
 
  .modal-close {
@@ -610,11 +611,46 @@
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
    padding: 10px;
    border-radius: 10px;
+   transition: all 0.3s ease;
+   z-index: 1000;
+   height: 50px;
+   overflow: hidden;
  }
 
- .music-player h3 {
+ .music-player-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 10px;
+ }
+
+ .music-player-header h3 {
    margin: 0;
-   text-align: center;
+   font-size: 1.2em;
+   color: #ff4d6d;
+ }
+
+ .minimize-btn {
+   background: none;
+   border: none;
+   color: #ff4d6d;
+   cursor: pointer;
+   padding: 5px;
+   font-size: 1.2em;
+   transition: transform 0.3s ease;
+ }
+
+ .minimize-btn:hover {
+   transform: scale(1.1);
+ }
+
+ .minimize-btn i {
+   transform: rotate(180deg);
+ }
+
+ .music-player-content {
+   transition: opacity 0.3s ease;
+   opacity: 0;
  }
 
  .controls {
