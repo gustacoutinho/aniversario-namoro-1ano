@@ -153,7 +153,7 @@ $(document).ready(function () {
   var places = [
     { name: 'Castilhos - Nosso Primeiro Encontro 😎', lat: -20.431033, lng: -54.607976, description: 'No aniverário do Alessandro. "Na casa da sua prima 😂"' },
     { name: 'Sésamo - Água com gás, Gelato e Café 🍦', lat: -20.453806, lng: -54.597290, description: 'Onde tomamos nosso primeiro sorvete, você me pagou meu primeiro café e eu descobri que você odiava agua com gás!' },
-    { name: 'Parque das Nações - O vestidinho azul 🥥', lat: -20.456037, lng: -54.572573, description: 'Nossa Primeira Água de coco' },
+    { name: 'Parque das Nações - O vestidinho azul 🥥', lat: -20.456037, lng: -54.572573, description: 'Nossa Primeira Água de coco. Aqui você me contou sobre seu amor por arquitetura e bem aqui eu conheci a grande profissional que você é e que você vai se tornar!' },
     { name: 'AP - Sambarilove 😈', lat: -20.509166, lng: -54.611759, description: 'A primeira vez que pisei na sua cabeça' },
     { name: 'Picadinho - Nosso Primeiro Beijo 💋', lat: -20.443153, lng: -54.597334, description: 'Aqui eu vi que você já era louca por mim' },
     { name: 'Feira Central - Nosso Primeiro Sobá 🍜', lat: -20.452168, lng: -54.620517, description: 'Soba não tem graça, mas você é uma gracinha...Pagou até a conta 💸' },
@@ -176,19 +176,19 @@ $(document).ready(function () {
   });
 
   let playlist = [
-    { name: "All of Me - John Legend", url: "./musicas/John Legend - All of Me.mp3" },
-    { name: "Ai Já Era - Jorge & Mateus", url: "./musicas/Jorge & Mateus - Ai Já Era - [Novo DVD Live in London] - (Clipe Oficial).mp3" },
-    { name: "Ponto Fraco", url: "./musicas/Ponto Fraco.mp3" },
+    { name: "93 Million Miles - Jason Mraz", url: "./musicas/Jason Mraz - 93 Million Miles.mp3" },
     { name: "Perfect - Ed Sheeran", url: "./musicas/Ed Sheeran - Perfect (Official Music Video).mp3" },
+    { name: "Ponto Fraco", url: "./musicas/Ponto Fraco.mp3" },
+    { name: "Ai Já Era - Jorge & Mateus", url: "./musicas/Jorge & Mateus - Ai Já Era - [Novo DVD Live in London] - (Clipe Oficial).mp3" },
     { name: "Make It Rain - Foy Vance", url: "./musicas/Foy Vance -Make It Rain.mp3" },
+    { name: "All of Me - John Legend", url: "./musicas/John Legend - All of Me.mp3" },
+    { name: "Would You Go With Me - Josh Turner", url: "./musicas/Josh Turner - Would You Go With Me.mp3" },
     { name: "Amor Não é Jogo de Azar - Jorge & Mateus", url: "./musicas/Jorge & Mateus - Amor Não é Jogo de Azar - [DVD Ao Vivo Em Goiânia] - (Clipe Oficial).mp3" },
     { name: "Quando Você Some - Victor & Leo", url: "./musicas/Victor & Leo - Quando Você Some (Ao Vivo).mp3" },
     { name: "Ela É Demais - Rick & Renner", url: "./musicas/Rick & Renner - Ela É Demais.mp3" },
     { name: "The Time Of My Life - Bill Medley & Jennifer Warnes", url: "./musicas/Bill Medley, Jennifer Warnes - The Time Of My Life .mp3" },
-    { name: "93 Million Miles - Jason Mraz", url: "./musicas/Jason Mraz - 93 Million Miles.mp3" },
     { name: "Lose Control - Teddy Swims", url: "./musicas/Teddy Swims - Lose Control.mp3" },
     { name: "I'm Yours - Jason Mraz", url: "./musicas/Jason Mraz - I'm Yours.mp3" },
-    { name: "Would You Go With Me - Josh Turner", url: "./musicas/Josh Turner - Would You Go With Me.mp3" },
     { name: "Jason Mraz", url: "./musicas/Jason Mraz.mp3" }
   ];
 
